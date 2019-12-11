@@ -18,7 +18,7 @@ server.use(express.static(__dirname + "/../client/dist"));
 //NOTE Allows requests from the port 8080, add additional addresses as needed
 var whitelist = ["http://localhost:8080"];
 var corsOptions = {
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
     callback(null, originIsWhitelisted);
   },
@@ -32,13 +32,13 @@ server.use(bp.json());
 
 //NOTE Everything above this line always stays the same
 
-//NOTE next we want to register all our routes(doorways that can be accessed in our app)
+//NOTE Register all our routes(doorways that can be accessed in our app)
 
 //NOTE we have to import access to our controllers
-import ValuesController from "./controllers/ValuesController";
+import GalaxiesController from "./controllers/GalaxiesController";
 
 //NOTE remember the forward slash at the start of your path!
-server.use("/api/values", new ValuesController().router);
+server.use("/api/galaxies", new GalaxiesController().router);
 
 //NOTE Everything below this line always stays the same
 
