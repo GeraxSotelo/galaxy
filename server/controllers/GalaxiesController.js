@@ -9,7 +9,8 @@ export default class GalaxiesController {
       .get("", this.getAll)
       .get("/:name", this.getByName)
       .post("", this.create)
-      .put("/:name", this.edit);
+      .put("/:name", this.edit)
+      .delete("/:name", this.delete);
   }
 
   async getAll(req, res, next) {
