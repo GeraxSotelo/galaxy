@@ -1,5 +1,7 @@
 import express from "express";
 import galaxiesService from "../services/GalaxiesService";
+import starsService from "../services/StarsService"
+import { RSA_NO_PADDING } from "constants";
 
 export default class GalaxiesController {
   constructor() {
@@ -8,6 +10,7 @@ export default class GalaxiesController {
       //NOTE  each route gets registered as a .get, .post, .put, or .delete, the first parameter of each method is a string to be concatinated onto the base url registered with the route in main. The second parameter is the method that will be run when this route is hit.
       .get("", this.getAll)
       .get("/:name", this.getByName)
+      .get("/:name/stars", this.getStarsbyGalaxyName)
       .post("", this.create)
       .put("/:name", this.edit)
       .delete("/:name", this.delete);
@@ -25,6 +28,15 @@ export default class GalaxiesController {
   async getByName(req, res, next) {
     try {
       let data = await galaxiesService.getByName(req.params.name);
+      return res.send(data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getStarsbyGalaxyName(req, res, next) {
+    try {
+      let data = await starsService.getStarsByGalaxyName(req.params.name)
       return res.send(data)
     } catch (error) {
       next(error)

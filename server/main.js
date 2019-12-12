@@ -36,15 +36,17 @@ server.use(bp.json());
 
 //NOTE we have to import access to our controllers
 import GalaxiesController from "./controllers/GalaxiesController";
+import StarsController from "./controllers/StarsController";
 
 //NOTE remember the forward slash at the start of your path!
 server.use("/api/galaxies", new GalaxiesController().router);
+server.use("/api/stars", new StarsController().router);
 
 //NOTE Everything below this line always stays the same
 
 //NOTE Default error handler, catches all routes with an error attached
 server.use((error, req, res, next) => {
-  res.status(error.status).send({ error: { message: error.message } });
+  res.status(error.status || 400).send({ error: { message: error.message } });
 });
 
 //NOTE Catch all to insure to return 404 if recieved a bad route

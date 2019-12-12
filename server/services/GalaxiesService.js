@@ -10,11 +10,7 @@ class GalaxiesService {
   }
 
   async getByName(name) {
-    let data = await _repository.findOne({ name: name });
-    if (!data) {
-      throw new ApiError("Invalid Name")
-    }
-    return data;
+    return await _repository.findOne({ name: name });
   }
 
   async create(body) {

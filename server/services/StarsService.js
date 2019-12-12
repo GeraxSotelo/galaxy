@@ -1,12 +1,21 @@
 import mongoose from "mongoose";
 import Star from "../models/Star";
 import ApiError from "../utils/ApiError"
+import galaxiesService from "./GalaxiesService"
 
 const _repository = mongoose.model("Star", Star);
 
 class StarsService {
   async getAll() {
     return await _repository.find({});
+  }
+
+  async getStarsByGalaxyName(galaxyName) {
+    let data = await _repository.find({ galaxyName: galaxyName })
+    if (!data) {
+      throw new ApiError("Invalid Name")
+    }
+    return data
   }
 
   async getByName(name) {
@@ -18,10 +27,8 @@ class StarsService {
   }
 
   async create(body) {
+    await galaxiesService.getByName(body.galaxyName)
     let data = await _repository.create(body);
-    if (!data) {
-      throw new ApiError("Invalid Name", 400)
-    }
     return data;
   }
 
